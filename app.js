@@ -7,6 +7,7 @@ const panToMeBtn = document.querySelector(".locateMe-btn");
 let startMarker;
 let endMarker;
 let polyLine;
+let myView = true;
 
 //// testing
 
@@ -28,6 +29,7 @@ class Map {
     this.latLngtLine = [];
     this.checkPoint = 200;
     this.mymap = L.map(this.mapHolder);
+    this.initializePosition = [];
     this.startEndMarker = [];
   }
 
@@ -51,21 +53,22 @@ class Map {
           let accuracy = position.coords.accuracy;
 
           // display on screen
-          // console.log(this.counter);
+
           currentAccuracyDisplay.textContent = accuracy.toFixed(2);
           currentLatitudeDisplay.textContent = lat.toFixed(6);
           currentLongitudeDisplay.textContent = lon.toFixed(6);
 
           // my view
 
-          this.mymap.setView([lat, lon], 25);
+          if (myView) {
+            this.mymap.setView([lat, lon], 17);
+            myView = false;
+          }
 
           /// set my coords
 
           this.myCurrentCoords.latitude = lat;
           this.myCurrentCoords.longitude = lon;
-
-          // console.log(this.myCurrentCoords.latitude);
 
           if (this.currentPositionMarker) {
             this.mymap.removeLayer(this.currentPositionMarker);
@@ -133,7 +136,6 @@ class Map {
         this.counter = 0;
         this.checkPoint = 200;
         this.isDrawing = false;
-        this.latLngtLine = [];
       }
 
       this.resetBtn.classList.add("hide-btn");
@@ -145,25 +147,22 @@ class Map {
         e.target.textContent = "Stop";
         this.isDrawing = true;
       } else if (e.target.textContent === "Stop") {
+        this.latLngtLine = polyLine.getLatLngs();
+
         e.target.textContent = "Start";
         this.isDrawing = false;
-
+        this.startEndMarker.push([
+          this.myCurrentCoords.latitude,
+          this.myCurrentCoords.longitude,
+        ]);
         // draw start-end Markers
 
-        if (polyLine && polyLine.getLatLngs().length > 1) {
-          this.startEndMarker = polyLine.getLatLngs();
-          this.startEndMarker.splice(1, this.startEndMarker.length - 2);
-
-          startMarker = L.marker([
-            this.startEndMarker[0].lat,
-            this.startEndMarker[0].lng,
-          ])
+        if (this.startEndMarker.length === 2) {
+          startMarker = L.marker(this.startEndMarker[0])
             .bindPopup("Start")
             .addTo(this.mymap);
-          endMarker = L.marker([
-            this.startEndMarker[1].lat,
-            this.startEndMarker[1].lng,
-          ])
+
+          endMarker = L.marker(this.startEndMarker[1])
             .bindPopup("End")
             .addTo(this.mymap);
         }
@@ -182,27 +181,27 @@ class Map {
         [this.myCurrentCoords.latitude, this.myCurrentCoords.longitude],
       ];
 
-      polyLine = L.polyline(startArr, {
-        color: "red",
-      }).addTo(this.mymap);
-
-      this.latLngtLine.push(startArr);
-    }
-
-    this.counter += 2;
-
-    if (this.counter === this.checkPoint) {
-      this.latLngtLine.push([
+      this.startEndMarker.push([
         this.myCurrentCoords.latitude,
         this.myCurrentCoords.longitude,
       ]);
 
+      polyLine = L.polyline(startArr, {
+        color: "red",
+      }).addTo(this.mymap);
+    }
+
+    this.counter += 5;
+
+    if (this.counter === this.checkPoint) {
       /// update polyline polyline
 
-      polyLine.addLatLng(this.latLngtLine[this.latLngtLine.length - 1]);
-      // console.log("line draw");
+      polyLine.addLatLng([
+        this.myCurrentCoords.latitude,
+        this.myCurrentCoords.longitude,
+      ]);
 
-      this.checkPoint += 200;
+      this.checkPoint += 150;
     }
   }
 }
