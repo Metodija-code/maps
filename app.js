@@ -93,9 +93,9 @@ class Map {
           }
         },
         () => {
-          alert("Initializng");
+          alert("Initializng HighAccuracy");
         },
-        { enableHighAccuracy: true, timeout: 60000 }
+        { enableHighAccuracy: true, timeout: 10000 }
       );
 
       ///////////////////// interval is up to here
