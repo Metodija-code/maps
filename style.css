@@ -1,0 +1,186 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+
+  background-color: rgb(247, 247, 247);
+  font-family: "Oxygen", sans-serif;
+}
+
+.mapid {
+  height: 580px;
+  width: 100%;
+
+  background-color: rgba(47, 60, 240, 0.473);
+}
+
+.info-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 15px;
+  color: rgb(100, 100, 100);
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.locateMe-btn {
+  margin-left: 45px;
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+}
+
+.locateMe-icon {
+  color: rgba(12, 112, 243, 0.979);
+  font-size: 2.5rem;
+}
+
+.btn-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 25px;
+}
+
+.myButton {
+  box-shadow: inset 0px 1px 3px 0px #9fb4f2;
+  background: linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+  background-color: #7892c2;
+  border-radius: 5px;
+  border: 1px solid #4e6096;
+  cursor: pointer;
+  color: #ffffff;
+  font-family: Arial;
+  font-size: 15px;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: 0px -1px 0px #283966;
+  margin-right: 10px;
+}
+.myButton:hover {
+  background: linear-gradient(to bottom, #476e9e 5%, #7892c2 100%);
+  background-color: #476e9e;
+}
+.myButton:active {
+  position: relative;
+  top: 1px;
+}
+
+.modal {
+  display: none;
+}
+
+.show-modal {
+  display: flex;
+}
+
+.my-div-icon {
+  color: green;
+}
+
+.hide-btn {
+  display: none;
+}
+
+/* media queries */
+
+@media only screen and (min-width: 300px) {
+  body {
+    background-color: rgba(243, 242, 242, 0.993);
+  }
+
+  .mapid {
+    width: 100vw;
+  }
+
+  .section-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .info-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+  p {
+    margin: 5px;
+    font-size: 80%;
+  }
+
+  .locateMe-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .locateMe-btn {
+    margin: 0;
+  }
+
+  .locateMe-icon {
+    font-size: 2rem;
+  }
+
+  .myButton {
+    width: 65px;
+    height: 30px;
+    font-size: 11px;
+  }
+}
+
+@media only screen and (min-width: 480px) {
+  .myButton {
+    width: 75px;
+    height: 35px;
+    font-size: 14px;
+  }
+
+  .locateMe-icon {
+    font-size: 2.3rem;
+  }
+
+  p {
+    font-size: 85%;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .info-container-values {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+
+  .myButton {
+    width: 95px;
+    height: 38px;
+    font-size: 15px;
+  }
+
+  .locateMe-icon {
+    font-size: 2.5rem;
+  }
+
+  p {
+    font-size: 85%;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .locateMe-icon {
+    font-size: 2.8rem;
+  }
+
+  p {
+    font-size: 100%;
+  }
+}
