@@ -51,7 +51,7 @@ class Map {
           let accuracy = position.coords.accuracy;
 
           // display on screen
-          console.log(this.counter);
+          // console.log(this.counter);
           currentAccuracyDisplay.textContent = accuracy.toFixed(2);
           currentLatitudeDisplay.textContent = lat.toFixed(6);
           currentLongitudeDisplay.textContent = lon.toFixed(6);
@@ -65,7 +65,7 @@ class Map {
           this.myCurrentCoords.latitude = lat;
           this.myCurrentCoords.longitude = lon;
 
-          console.log(this.myCurrentCoords.latitude);
+          // console.log(this.myCurrentCoords.latitude);
 
           if (this.currentPositionMarker) {
             this.mymap.removeLayer(this.currentPositionMarker);
@@ -200,9 +200,9 @@ class Map {
       /// update polyline polyline
 
       polyLine.addLatLng(this.latLngtLine[this.latLngtLine.length - 1]);
-      console.log("line draw");
+      // console.log("line draw");
 
-      this.checkPoint += 400;
+      this.checkPoint += 200;
     }
   }
 }
