@@ -7,10 +7,14 @@ const panToMeBtn = document.querySelector(".locateMe-btn");
 let startMarker;
 let endMarker;
 let polyLine;
+let localStoPolyLine;
+let startStoMarker;
+let endStoMarker;
 let myView = true;
 
-//// testing
+/// import externals
 
+// initialize map holder
 const mapHolder = document.querySelector(".mapid");
 
 class Map {
@@ -138,6 +142,12 @@ class Map {
         this.isDrawing = false;
       }
 
+      if (localStoPolyLine) {
+        map.removeLayer(localStoPolyLine);
+        map.removeLayer(startStoMarker);
+        map.removeLayer(endStoMarker);
+      }
+
       this.resetBtn.classList.add("hide-btn");
       this.startBtn.classList.remove("hide-btn");
     });
@@ -146,6 +156,12 @@ class Map {
       if (e.target.textContent === "Start") {
         e.target.textContent = "Stop";
         this.isDrawing = true;
+
+        if (localStoPolyLine) {
+          map.removeLayer(localStoPolyLine);
+          map.removeLayer(startStoMarker);
+          map.removeLayer(endStoMarker);
+        }
       } else if (e.target.textContent === "Stop") {
         this.latLngtLine = polyLine.getLatLngs();
 
@@ -155,8 +171,10 @@ class Map {
           this.myCurrentCoords.latitude,
           this.myCurrentCoords.longitude,
         ]);
-        // draw start-end Markers
 
+        this.saveToLocalStorage(this.latLngtLine);
+
+        // draw start-end Markers
         if (this.startEndMarker.length === 2) {
           startMarker = L.marker(this.startEndMarker[0])
             .bindPopup("Start")
@@ -204,12 +222,41 @@ class Map {
       this.checkPoint += 150;
     }
   }
+
+  saveToLocalStorage(arr) {
+    const arrForLocalStorage = arr.map((item) => {
+      return [item.lat, item.lng];
+    });
+
+    localStorage.setItem("polyLinepoints", JSON.stringify(arrForLocalStorage));
+  }
+
+  drawFromLocalStorage() {
+    const points = JSON.parse(localStorage.getItem("polyLinepoints"));
+
+    if (points) {
+      localStoPolyLine = L.polyline(points, {
+        color: "red",
+        weight: 3,
+      });
+
+      this.mymap.addLayer(localStoPolyLine);
+      startStoMarker = L.marker(points[0]).bindPopup("Start").addTo(this.mymap);
+      endStoMarker = L.marker(points[points.length - 1])
+        .bindPopup("End")
+        .addTo(this.mymap);
+
+      this.mymap.setView(points[0], 17);
+    }
+  }
 }
 
+/// map instance
 const map = new Map();
 
 /// Event Listeners
 
 window.addEventListener("DOMContentLoaded", () => {
   map.locateMe();
+  map.drawFromLocalStorage();
 });
