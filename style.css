@@ -137,6 +137,30 @@ body {
   }
 }
 
+@media only screen and (min-width: 375px) {
+  .mapid {
+    height: 500px;
+  }
+
+  .myButton {
+    width: 55px;
+    height: 25px;
+    font-size: 12px;
+  }
+
+  .locateMe-icon {
+    font-size: 2rem;
+  }
+
+  p {
+    font-size: 75%;
+  }
+
+  .btn-container {
+    margin-top: 15px;
+  }
+}
+
 @media only screen and (min-width: 480px) {
   .myButton {
     width: 75px;

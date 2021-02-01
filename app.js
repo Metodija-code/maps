@@ -138,7 +138,7 @@ class Map {
         map.removeLayer(polyLine);
         this.startEndMarker = [];
         this.counter = 0;
-        this.checkPoint = 200;
+        this.checkPoint = 100;
         this.isDrawing = false;
       }
 
@@ -173,6 +173,11 @@ class Map {
         ]);
 
         this.saveToLocalStorage(this.latLngtLine);
+
+        polyLine.addLatLng([
+          this.myCurrentCoords.latitude,
+          this.myCurrentCoords.longitude,
+        ]);
 
         // draw start-end Markers
         if (this.startEndMarker.length === 2) {
@@ -209,7 +214,7 @@ class Map {
       }).addTo(this.mymap);
     }
 
-    this.counter += 5;
+    this.counter += 10;
 
     if (this.counter === this.checkPoint) {
       /// update polyline polyline
@@ -237,7 +242,7 @@ class Map {
     if (points) {
       localStoPolyLine = L.polyline(points, {
         color: "red",
-        weight: 3,
+        weight: 2,
       });
 
       this.mymap.addLayer(localStoPolyLine);
